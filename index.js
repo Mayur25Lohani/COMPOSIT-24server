@@ -26,10 +26,13 @@ mongoose.connection.on("disconnected", () => {
 });
 
 //middlewares
-app.use(cors())
-app.use(cookieParser())
-app.use(express.json());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }))
+app.use(cors({
+    origin: ["http://localhost:3000", "https://composit.onrender.com"],
+}))
+app.use(cookieParser())
 app.use("/server/auth", authRoute);
 app.use("/server/users", usersRoute);
 app.use("/server/eventRegistration", eventRegistrationRoute);
