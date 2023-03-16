@@ -33,9 +33,9 @@ app.use(cors({
     origin: ["http://localhost:3000", "https://composit.onrender.com"],
 }))
 app.use(cookieParser())
-app.use("/server/auth", authRoute);
-app.use("/server/users", usersRoute);
-app.use("/server/eventRegistration", eventRegistrationRoute);
+app.use("/auth", authRoute);
+app.use("/users", usersRoute);
+app.use("/eventRegistration", eventRegistrationRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
