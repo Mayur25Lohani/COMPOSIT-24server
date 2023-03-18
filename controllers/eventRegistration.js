@@ -10,7 +10,7 @@ import Ideathon from "../models/Ideathon.js";
 import Technova from "../models/Technova.js";
 
 export const registerMetaclix = async (req, res, next) => {
-  const newRegistration = new Metaclix({ participantId: req.user.id });
+  const newRegistration = new Metaclix({ participantId: req.body.participantId });
   try {
     const savedRegistration = await newRegistration.save();
     res.status(200).json(savedRegistration);
@@ -20,7 +20,7 @@ export const registerMetaclix = async (req, res, next) => {
 };
 
 export const registerMetallomania = async (req, res, next) => {
-  const newRegistration = new Metallomania({ participantId: req.user.id });
+  const newRegistration = new Metallomania({ participantId: req.body.participantId });
   try {
     const savedRegistration = await newRegistration.save();
     res.status(200).json(savedRegistration);
@@ -30,7 +30,7 @@ export const registerMetallomania = async (req, res, next) => {
 };
 
 export const registerTechtoon = async (req, res, next) => {
-  const newRegistration = new Techtoon({ participantId: req.user.id });
+  const newRegistration = new Techtoon({ participantId: req.body.participantId });
   try {
     const savedRegistration = await newRegistration.save();
     res.status(200).json(savedRegistration);
@@ -40,7 +40,7 @@ export const registerTechtoon = async (req, res, next) => {
 };
 
 export const registerEnigma = async (req, res, next) => {
-  const p1 = req.user.id
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   try {
     const enigma = await Enigma.find({}, { individualPid: 1, _id:0 })
@@ -71,8 +71,8 @@ export const registerEnigma = async (req, res, next) => {
   }
 };
 
-export const registerSchoolQuiz = async (req, res, next) => {
-  const p1 = req.user.id
+export const registerSchoolquiz = async (req, res, next) => {
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   try {
     const schoolQuiz = await SchoolQuiz.find({}, { individualPid: 1, _id:0 })
@@ -104,7 +104,7 @@ export const registerSchoolQuiz = async (req, res, next) => {
 };
 
 export const registerCad = async (req, res, next) => {
-  const p1 = req.user.id
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   const p3 = req.body.pid3
   try {
@@ -139,8 +139,8 @@ export const registerCad = async (req, res, next) => {
 };
 
 
-export const registerCaseStudy = async (req, res, next) => {
-  const p1 = req.user.id
+export const registerCasestudy = async (req, res, next) => {
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   const p3 = req.body.pid3
   try {
@@ -176,7 +176,7 @@ export const registerCaseStudy = async (req, res, next) => {
 
 
 export const registerExcavate = async (req, res, next) => {
-  const p1 = req.user.id
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   const p3 = req.body.pid3
   try {
@@ -211,7 +211,7 @@ export const registerExcavate = async (req, res, next) => {
 };
 
 export const registerIdeathon = async (req, res, next) => {
-  const p1 = req.user.id
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   const p3 = req.body.pid3
   try {
@@ -246,7 +246,7 @@ export const registerIdeathon = async (req, res, next) => {
 };
 
 export const registerTechnova = async (req, res, next) => {
-  const p1 = req.user.id
+  const p1 = req.body.pid1
   const p2 = req.body.pid2
   const p3 = req.body.pid3
   try {

@@ -8,7 +8,6 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -31,12 +30,11 @@ const UserSchema = new mongoose.Schema(
       required: true,
     },
     contact: {
-      type: Number,
+      type: String,
       required: true,
-      unique: true,
     },
     gradyear: {
-      type: Number,
+      type: String,
       required: true,
     },
     address: {
@@ -49,6 +47,10 @@ const UserSchema = new mongoose.Schema(
     },
     refId: {
       type: String,
+    },
+    regID: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

@@ -4,9 +4,9 @@ import {
   registerMetallomania,
   registerTechtoon,
   registerEnigma,
-  registerSchoolQuiz,
+  registerSchoolquiz,
   registerCad,
-  registerCaseStudy,
+  registerCasestudy,
   registerExcavate,
   registerIdeathon,
   registerTechnova,
@@ -30,9 +30,9 @@ router.post("/metaclix/:id", registerMetaclix)
 router.post("/metallomania/:id", registerMetallomania)
 router.post("/techtoon/:id", registerTechtoon)
 router.post("/enigma/:id", registerEnigma)
-router.post("/schoolQuiz/:id", registerSchoolQuiz)
+router.post("/schoolquiz/:id", registerSchoolquiz)
 router.post("/cad/:id", registerCad)
-router.post("/caseStudy/:id", registerCaseStudy)
+router.post("/casestudy/:id", registerCasestudy)
 router.post("/excavate/:id", registerExcavate)
 router.post("/ideathon/:id", registerIdeathon)
 router.post("/technova/:id", registerTechnova)
