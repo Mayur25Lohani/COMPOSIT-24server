@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRoute from "./routes/auth.js";
+import adminRoute from "./routes/admin.js";
 import usersRoute from "./routes/users.js";
 import eventRegistrationRoute from "./routes/eventRegistration.js";
 import cookieParser from "cookie-parser";
@@ -36,6 +37,7 @@ app.use(cookieParser())
 app.use("/auth", authRoute);
 app.use("/users", usersRoute);
 app.use("/eventRegistration", eventRegistrationRoute);
+app.use("/admin", adminRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
