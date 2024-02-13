@@ -31,7 +31,7 @@ mongoose.connection.on("disconnected", () => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }))
 app.use(cors({
-    origin: ["http://localhost:3000", "https://composit.onrender.com", "https://compositAdm.onrender.com","https://composit.onrender.com/admin", "https://composit.in", "https://compositAdm.in", "https://composit.in/admin" , "*"],
+    origin: ["http://localhost:3000", "https://composit2k24.onrender.com", "https://composit.onrender.com", "https://compositAdm.onrender.com","https://composit.onrender.com/admin", "https://composit.in", "https://compositAdm.in", "https://composit.in/admin" , "*"],
 }))
 app.use(cookieParser())
 app.use("/auth", authRoute);
