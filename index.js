@@ -10,7 +10,8 @@ import cors from "cors";
 import crypto from "crypto";
 import Stripe from "stripe";
 import Razorpay from "razorpay";
-import nodemailer from 'nodemailer';
+import nodemailer from "nodemailer";
+import Accommodation from "./models/Accommodation.js";
 
 const PORT = process.env.PORT || 8800;
 
@@ -81,23 +82,24 @@ app.post("/order", async (req, res) => {
   }
 });
 
-app.post("/order/validate", async (req,res) => {
-  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+// app.post("/order/validate", async (req, res) => {
+//   const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+//     req.body;
 
-  const sha = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
-  // order_id + "|" + razorpay_payment_id, secret
-  sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
-  const digest = sha.digest("hex");
-  if(digest !== razorpay_signature){
-    return res.status(400).json({msg: "Transaction is not legit!"});
-  }
+//   const sha = crypto.createHmac("sha256", process.env.RAZORPAY_SECRET);
+//   // order_id + "|" + razorpay_payment_id, secret
+//   sha.update(`${razorpay_order_id}|${razorpay_payment_id}`);
+//   const digest = sha.digest("hex");
+//   if (digest !== razorpay_signature) {
+//     return res.status(400).json({ msg: "Transaction is not legit!" });
+//   }
 
-  res.json({
-    msg: "success",
-    orderId: razorpay_order_id,
-    paymentId: razorpay_payment_id,
-  })
-})
+//   res.json({
+//     msg: "success",
+//     orderId: razorpay_order_id,
+//     paymentId: razorpay_payment_id,
+//   });
+// });
 
 // app.post("/api/payment", async (req, res) => {
 //   const { amount, token } = req.body;
@@ -155,29 +157,64 @@ app.post("/order/validate", async (req,res) => {
 //     res.json({id:session.id});
 // });
 
-app.post('/contact', async (req, res, next) => {
-  console.log("contact hit")
+app.post("/accommodation", async (req, res, next) => {
   try {
-      const transporter = nodemailer.createTransport({
-          host: 'smtp.gmail.com',
-          port: 465,
-          secure: true,
-          auth: {
-              user: process.env.MAIL,
-              pass: process.env.PASS
-          }
-      })
-      const mailOptions = {
-          from: process.env.MAIL,
-          to: 'lohanimayuresh2551@gmail.com',
-          subject: "Important Message From COMPOSIT Website",
-          html: `User <b>${req.body.name}</b> is trying to contact you via <b>${req.body.email}</b>. <br> <b>Subject:</b> ${req.body.subject} <br> <b>Message:</b> ${req.body.message}`
-      }
-      transporter.sendMail(mailOptions, (error, info) => {
-          res.status(200).json("Message sent!");
-      })
+    const newAccommodation = new Accommodation(req.body);
+    await newAccommodation.save();
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAIL,
+        pass: process.env.PASS,
+      },
+    });
+    const mailOptions = {
+      from: process.env.MAIL,
+      // bcc: "ujjawalrr@gmail.com",
+      bcc: 'lohanimayuresh2551@gmail.com',
+      to: `${req.body.email}`,
+      subject: "Payment Details for COMPOSIT 2024 Accommodation",
+      html: `Hey <b>${req.body.name}</b>. We are verifying your payment and will give you a confirmation regarding the same within 24 hours.
+          <br> 
+          <b>Payment Details</b> <br> 
+          <b>Name: </b> ${req.body.name} <br> 
+          <b>Email: </b> ${req.body.email} <br> 
+          <b>Registration ID: </b> ${req.body.regID} <br> 
+          <b>Transaction ID: </b> ${req.body.paymentDetails}
+          `,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      res.status(200).json("Payment is getting verified. We will mail you upon verification!");
+    });
   } catch (error) {
-      next(error);
+    next(error);
+  }
+});
+
+app.post("/contact", async (req, res, next) => {
+  try {
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAIL,
+        pass: process.env.PASS,
+      },
+    });
+    const mailOptions = {
+      from: process.env.MAIL,
+      to: "lohanimayuresh2551@gmail.com",
+      subject: "Important Message From COMPOSIT Website",
+      html: `User <b>${req.body.name}</b> is trying to contact you via <b>${req.body.email}</b>. <br> <b>Subject:</b> ${req.body.subject} <br> <b>Message:</b> ${req.body.message}`,
+    };
+    transporter.sendMail(mailOptions, (error, info) => {
+      res.status(200).json("Message sent!");
+    });
+  } catch (error) {
+    next(error);
   }
 });
 
