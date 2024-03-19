@@ -12,10 +12,12 @@ const AccommodationSchema = new mongoose.Schema(
     paymentDetails: {
       type: String,
       required: true,
+      unique: true
     },
     regID: {
       type: String,
       required: true,
+      unique: true
     },
   },
   { timestamps: true }
